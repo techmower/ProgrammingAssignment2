@@ -1,0 +1,22 @@
+List of Build Image commands:
+
+Preparation
+Download en_core_web_trf-3.5.0.tar.gz and stanza_resources.7z then placed in root directory of project
+
+unzip stanza_resources.7z in the same directory.
+
+Make directory adjestment to match the file or directory path defined in the Docker file
+
+Build Image
+docker build -t pii-redact:base-stanza .
+
+Add stanza
+docker run -it pii-redact:base-stanza-v6 bash
+
+docker cp stanza_resources 3080e0f8b288:/usr/src/app/stanza_resources
+
+docker cp stanza_resources 3080e0f8b288:/usr/src/app
+
+docker cp stanza_resources 3080e0f8b288:/root
+
+docker commit 3080e0f8b288 pii-redact:base-stanza
