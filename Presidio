@@ -1,0 +1,20 @@
+FROM python:3.10-slim-bullseye
+
+ENV PORT 5000
+EXPOSE 5000
+
+WORKDIR /usr/src/app
+
+COPY requirements.txt ./
+COPY en_core_web_trf-3.7.3.tar.gz ./
+COPY app.py ./
+
+# point pip to art.nwi.net
+RUN printf '[global]\ntrusted-host = maven.net\nindex-url = https://maven.net/api/pypi/pypi/simple\n' > /etc/pip.conf
+
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --trusted-host pypi.org --trusted-host files.pythonhosted.orgspacy en_core_web_trf-3.7.3.tar.gz
+COPY en-spelling.txt /usr/local/lib/python3.10/site-packages/textblob/en/
+COPY stanza_resources/ /root/stanza_resources/
+
+CMD [ "python", "./app.py" ]
