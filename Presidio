@@ -9,7 +9,6 @@ COPY requirements.txt ./
 COPY en_core_web_trf-3.7.3.tar.gz ./
 COPY app.py ./
 
-# point pip to art.nwi.net
 RUN printf '[global]\ntrusted-host = maven.net\nindex-url = https://maven.net/api/pypi/pypi/simple\n' > /etc/pip.conf
 
 RUN pip install --no-cache-dir -r requirements.txt
